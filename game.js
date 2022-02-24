@@ -4,8 +4,8 @@ export class Board {
             this.position = [[0, 0, 0, 0, 0, 0, 0, 0], 
                              [0, 0, 0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0, 0, 0],
-                             [0, 0, 0, 1, 2, 0, 0, 0],
                              [0, 0, 0, 2, 1, 0, 0, 0],
+                             [0, 0, 0, 1, 2, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0, 0, 0]]
@@ -122,5 +122,24 @@ export class Board {
         }
         cap = [...new Set(cap.map(e => JSON.stringify(e)))].map(e => JSON.parse(e))
         return cap
+    }
+
+    isWinner() {
+        var cont = 0
+        for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                switch (this.position[i][j]) {
+                    case 1:
+                        cont += 1
+                        break
+                    case 2:
+                        cont -= 1
+                        break
+                }
+            }
+        }
+        if (cont > 0) return 1
+        if (cont < 0) return 2
+        else return 0
     }
 }
