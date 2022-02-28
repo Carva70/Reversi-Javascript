@@ -111,6 +111,9 @@ document.addEventListener('keydown', (event) => {
         board.drawBoard(display)
         
     }
+    if (event.key == 'm') {
+        evaluate(board, display, heuristica2, profundidad2)
+    }
     
 })
 
@@ -251,4 +254,50 @@ function contar(board) {
         }
     }
     return cont
+}
+
+function evaluate(board, display, h, prof) {
+    var succ = board.getSuccessors()
+    var res = []
+    var i, x, y
+    var vector
+    var maxDisplay, best
+
+    board.drawBoard(display)
+
+    for (i in succ) {
+        board.move(succ[i][0], succ[i][1])
+        res.push([succ[i], minimax(board, prof, -99999, 99999, h)])
+        board.rollBack()
+    }
+
+    res.sort()
+
+    best = ((board.next * 2) - 3) * 999999
+
+    for (i = display.childElementCount - 1; i >= 0; i--) {
+        x = Math.floor(i / 8)
+        y = i % 8
+
+        vector = res.pop()
+        if (vector == null) continue
+        if (vector[0][0] == x && vector[0][1] == y) {
+            display.children[i].innerText = Math.round(vector[1] * 100) / 100
+            display.children[i].classList.add('possible')
+
+            if (board.next == 1) {
+                if (vector[1] >= best) {
+                    best = vector[1]
+                    maxDisplay = display.children[i]
+                }
+            } else {
+                if (vector[1] <= best) {
+                    best = vector[1]
+                    maxDisplay = display.children[i]
+                }
+            }
+        } else
+        res.push(vector)
+    }
+    maxDisplay.classList.add('bestMove')
 }

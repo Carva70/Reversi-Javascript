@@ -34,4 +34,22 @@ body {
     margin-bottom: 5%;
     margin-left: 5%;
     margin-right: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.possible {
+    background-color: #ccc;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    margin-left: 15%;
+    margin-right: 15%;
+    font-family:'Courier New', Courier, monospace
+}
+
+.bestMove {
+    background-color: rgb(156, 137, 238);
 }
