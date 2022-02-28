@@ -5,8 +5,8 @@ var display = document.querySelector('.board')
 var board = new Board()
 board.drawBoard(display)
 
-var profundidad1 = 3
-var profundidad2 = 3
+var profundidad1 = 5
+var profundidad2 = 5
 
 document.addEventListener('click', (event) => {
     if (event.target.classList.contains('empty')) {
@@ -61,7 +61,7 @@ document.addEventListener('keydown', (event) => {
     if (event.key == 'z') {
         var h1 = 0
         var h2 = 0
-        var it = 50
+        var it = 10
 
         for (var i = 0; i < it; i++) {
 
@@ -267,7 +267,7 @@ function evaluate(board, display, h, prof) {
 
     for (i in succ) {
         board.move(succ[i][0], succ[i][1])
-        res.push([succ[i], minimax(board, prof, -99999, 99999, h)])
+        res.push([succ[i], 50 * (Math.atan( minimax(board, prof, -99999, 99999, h))/(Math.PI/2) + 1)])
         board.rollBack()
     }
 
@@ -282,7 +282,7 @@ function evaluate(board, display, h, prof) {
         vector = res.pop()
         if (vector == null) continue
         if (vector[0][0] == x && vector[0][1] == y) {
-            display.children[i].innerText = Math.round(vector[1] * 100) / 100
+            
             display.children[i].classList.add('possible')
 
             if (board.next == 1) {
@@ -290,11 +290,13 @@ function evaluate(board, display, h, prof) {
                     best = vector[1]
                     maxDisplay = display.children[i]
                 }
+                display.children[i].innerText = `${Math.round(vector[1] * 100) / 100}%`
             } else {
                 if (vector[1] <= best) {
                     best = vector[1]
                     maxDisplay = display.children[i]
                 }
+                display.children[i].innerText = `${Math.round((100 - vector[1]) * 100) / 100}%`
             }
         } else
         res.push(vector)
