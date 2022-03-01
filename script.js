@@ -284,18 +284,19 @@ function evaluate(board, display, h, prof) {
         if (vector[0][0] == x && vector[0][1] == y) {
             
             display.children[i].classList.add('possible')
-            display.children[i].innerText = `${Math.round((vector[1]) * 100) / 100}%`
 
             if (board.next == 1) {
                 if (vector[1] >= best) {
                     best = vector[1]
                     maxDisplay = display.children[i]
                 }
+                display.children[i].innerText = `${Math.round(vector[1] * 100) / 100}%`
             } else {
                 if (vector[1] <= best) {
                     best = vector[1]
                     maxDisplay = display.children[i]
                 }
+                display.children[i].innerText = `${Math.round((100 - vector[1]) * 100) / 100}%`
             }
         } else
         res.push(vector)
